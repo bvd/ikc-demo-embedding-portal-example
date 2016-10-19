@@ -81,7 +81,7 @@ jQuery(document).ready(function() {
 		var postdata = {};
 		postdata.message = $("#contact-form-face textarea").first().val();
 		postdata.recaptcha = grecaptcha.getResponse();
-		var apiurl = "https://ikcomponeer-demo-contactform.azurewebsites.net/api/PostMsg?code=jatjbzxybt18s935es14x2wsnziycjtc";
+		var apiurl = "https://ikcomponeer-demo-contactform-intake.azurewebsites.net/api/PostMessage?code=ps0y003ry5kmgmzc5ttg2h9sv8erntcec";
 		$.post(apiurl , postdata, function( data ) {
 			$("#contact-form-face").hide();
 			$("#contact-form-success").show();
@@ -284,7 +284,7 @@ jQuery(window).resize(function(){
 
 function contactHeight(){
 	if ($(window).width() > 991){
-		var wh = jQuery('footer').height() + 150;
+		var wh = jQuery('footer').height() + 70;
 		jQuery('#contacts').css('min-height', wh);
 	}
 }
