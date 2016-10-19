@@ -83,7 +83,8 @@ jQuery(document).ready(function() {
 		postdata.recaptcha = grecaptcha.getResponse();
 		var apiurl = "https://ikcomponeer-demo-contactform.azurewebsites.net/api/PostMsg?code=jatjbzxybt18s935es14x2wsnziycjtc";
 		$.post(apiurl , postdata, function( data ) {
-			$( ".result" ).html( data );
+			$("#contact-form-face").hide();
+			$("#contact-form-success").show();
 		});
 	});
 	
@@ -286,8 +287,6 @@ function contactHeight(){
 		var wh = jQuery('footer').height() + 70;
 		jQuery('#contacts').css('min-height', wh);
 	}
-	
-
 }
 
 
