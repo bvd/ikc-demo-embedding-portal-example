@@ -80,7 +80,7 @@ jQuery(document).ready(function() {
 	$("#contact-form-face").click(function() {
 		var postdata = {};
 		postdata.message = $("#contact-form-face message").first().val();
-		postdata.g-recaptcha-response = grecaptcha.getResponse();
+		postdata.recaptcha = grecaptcha.getResponse();
 		var apiurl = "https://ikcomponeer-demo-contactform.azurewebsites.net/api/PostMsg?code=jatjbzxybt18s935es14x2wsnziycjtc";
 		$.post(apiurl , postdata, function( data ) {
 			$( ".result" ).html( data );
