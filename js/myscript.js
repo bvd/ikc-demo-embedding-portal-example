@@ -77,9 +77,9 @@ jQuery(document).ready(function() {
 	};
 	
 	// contact form
-	$("#contact-form-face").click(function() {
+	$("#contact-form-face .contact_btn").click(function() {
 		var postdata = {};
-		postdata.message = $("#contact-form-face message").first().val();
+		postdata.message = $("#contact-form-face textarea").first().val();
 		postdata.recaptcha = grecaptcha.getResponse();
 		var apiurl = "https://ikcomponeer-demo-contactform.azurewebsites.net/api/PostMsg?code=jatjbzxybt18s935es14x2wsnziycjtc";
 		$.post(apiurl , postdata, function( data ) {
