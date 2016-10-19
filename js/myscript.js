@@ -39,7 +39,7 @@ function calculateScroll() {
 	var contentBottom   =   [];
 	var winTop      =   $(window).scrollTop();
 	var rangeTop    =   200;
-	var rangeBottom =   500;
+	var rangeBottom =   700;
 	$('.navmenu').find('.scroll_btn a').each(function(){
 		contentTop.push( $( $(this).attr('href') ).offset().top );
 		contentBottom.push( $( $(this).attr('href') ).offset().top + $( $(this).attr('href') ).height() );
@@ -75,6 +75,19 @@ jQuery(document).ready(function() {
 			return false;
 		});
 	};
+	
+	// contact form
+	$("#contact-form-face").click(function() {
+		var postdata = {};
+		postdata.message = $("#contact-form-face message").first().val();
+		postdata.g-recaptcha-response = grecaptcha.getResponse();
+		var apiurl = "https://ikcomponeer-demo-contactform.azurewebsites.net/api/PostMsg?code=jatjbzxybt18s935es14x2wsnziycjtc";
+		$.post(apiurl , postdata, function( data ) {
+			$( ".result" ).html( data );
+		});
+	});
+	
+	
 });
 
 
@@ -84,6 +97,8 @@ jQuery(document).ready(function() {
 		$('.navmenu ul').superfish();
 	}
 });
+
+
 
 
 
