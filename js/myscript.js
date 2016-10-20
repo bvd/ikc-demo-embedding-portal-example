@@ -91,9 +91,16 @@ jQuery(document).ready(function() {
 		postdata.message = $("#contact-form-face textarea").first().val();
 		postdata.recaptcha = grecaptcha.getResponse();
 		var apiurl = "https://ikcomponeer-demo-contactform-intake.azurewebsites.net/api/PostMessage?code=ps0y003ry5kmgmzc5ttg2h9sv8erntcec";
-		$.post(apiurl , postdata, function( data ) {
+		
+		$.post( apiurl, postdata).done(function( data ) {
 			$("#contact-form-face").hide();
-			$("#contact-form-success").show();
+			$("#contact-form-waiting").show();
+			// here we will poll for the processing status
+			// ..
+			// ..
+		}).fail(function() {
+			$("#contact-form-face").hide();
+			$("#contact-form-could_not_send").show();
 		});
 	});
 	
