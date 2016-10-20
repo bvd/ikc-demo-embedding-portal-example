@@ -96,8 +96,29 @@ jQuery(document).ready(function() {
 			$("#contact-form-face").hide();
 			$("#contact-form-waiting-msg-identifier").text(postdata.guid);
 			$("#contact-form-waiting").show();
-			// here we will poll for the processing status
-			// ..
+			
+			$.ajax({
+				url : "https://ikcomponeer-demo-contactform-status.azurewebsites.net/api/GetStatus?code=aojit9klufl0k1idjpk9d494qq0ty6yi4w&guid=" + postdata.guid,
+				type : 'GET', 
+				tryCount : 0,
+				retryLimit : 30,
+				success : function(json) {
+					// do something
+				},
+				error : function(xhr, textStatus, errorThrown ) {
+					this.tryCount++;
+					if (this.tryCount <= this.retryLimit) {
+						setTimeout(
+						function() 
+						{
+							// retry
+							$.ajax(this);
+						}, 1000);
+					}
+				}
+			});
+
+
 			// ..
 		}).fail(function() {
 			$("#contact-form-face").hide();
