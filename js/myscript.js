@@ -78,7 +78,16 @@ jQuery(document).ready(function() {
 	
 	// contact form
 	$("#contact-form-face .contact_btn").click(function() {
+		
+		function guid() {
+			function s4() {
+				return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+			}
+			return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+		}
+		
 		var postdata = {};
+		postdata.guid = guid();
 		postdata.message = $("#contact-form-face textarea").first().val();
 		postdata.recaptcha = grecaptcha.getResponse();
 		var apiurl = "https://ikcomponeer-demo-contactform-intake.azurewebsites.net/api/PostMessage?code=ps0y003ry5kmgmzc5ttg2h9sv8erntcec";
