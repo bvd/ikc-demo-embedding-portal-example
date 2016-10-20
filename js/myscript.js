@@ -94,6 +94,7 @@ jQuery(document).ready(function() {
 		
 		$.post( apiurl, postdata).done(function( data ) {
 			$("#contact-form-face").hide();
+			$("#contact-form-waiting-msg-identifier").text(postdata.guid);
 			$("#contact-form-waiting").show();
 			// here we will poll for the processing status
 			// ..
