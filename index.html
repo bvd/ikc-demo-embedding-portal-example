@@ -36,6 +36,7 @@
 	<script src="js/jquery.mb.YTPlayer.js" type="text/javascript"></script>
 	<script src="js/animate.js" type="text/javascript"></script>
 	<script src="js/jquery.BlackAndWhite.js"></script>
+	<script src="js/jquery.ajax-retry.min.js"></script>
 	<script src="js/myscript.js" type="text/javascript"></script>
 	<script>
 		
@@ -774,7 +775,8 @@
 						<div id="note"></div>
 						<div id="fields">
 							<form id="contact-form-face" class="clearfix" >
-								<textarea type="text" name="message" onFocus="if (this.value == 'Please enter your message and contact details here.') this.value = '';" onBlur="if (this.value == '') this.value = 'Please enter your message and contact details here.';" />Please enter your message and contact details here.</textarea>
+								<textarea type="text" name="message" onFocus="if (this.value == 'Please enter your message here.') this.value = '';" onBlur="if (this.value == '') this.value = 'Please enter your message here.';" />Please enter your message here.</textarea>
+								<input type="text" class="email" value="enter email" onFocus="if (this.value == 'enter email') this.value = '';" onBlur="if (this.value == '') this.value = 'enter email';"></input>
 								<div 
 									class="g-recaptcha" 
 									data-sitekey="6LfPoAkUAAAAAHUmaIRP7O6JZoIjwJceUtQJmTVW"

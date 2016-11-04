@@ -89,38 +89,58 @@ jQuery(document).ready(function() {
 		var postdata = {};
 		postdata.guid = guid();
 		postdata.message = $("#contact-form-face textarea").first().val();
+		postdata.email = $("#contact-form-face input.email").first().val();
 		postdata.recaptcha = grecaptcha.getResponse();
 		var apiurl = "https://ikcomponeer-demo-contactform-intake.azurewebsites.net/api/PostMessage?code=ps0y003ry5kmgmzc5ttg2h9sv8erntcec";
 		
+		// the first request (store the form to be processed on the server) 
+		// it should next to always succeed as it has no dependencies
 		$.post( apiurl, postdata).done(function( data ) {
+			
+			// show the user that the form validation is running on the server
 			$("#contact-form-face").hide();
 			$("#contact-form-waiting-msg-identifier").text(postdata.guid);
 			$("#contact-form-waiting").show();
 			
+			var retryCodes = [
+				404, // not found (i.e. not created yet)
+				403  // the resource is locked
+			];
+			
 			$.ajax({
 				url : "https://ikcomponeer-demo-contactform-status.azurewebsites.net/api/GetStatus?code=aojit9klufl0k1idjpk9d494qq0ty6yi4w&guid=" + postdata.guid,
-				type : 'GET', 
-				tryCount : 0,
-				retryLimit : 30,
-				success : function(json) {
-					// do something
-				},
-				error : function(xhr, textStatus, errorThrown ) {
-					this.tryCount++;
-					if (this.tryCount <= this.retryLimit) {
-						setTimeout(
-						function() 
-						{
-							// retry
-							$.ajax(this);
-						}, 1000);
+				type : 'GET'
+			}).retry({times:3, timeout:3000, statusCodes: retryCodes}).then(function(data){
+				if(data.messageForwarded){
+					// FUNCTIONAL SUCCESS
+				}
+				else
+				{
+					// FUNCTIONAL ERROR STATUSES
+					if(data.missingEmail){
+				
+					}
+					if(data.missingMessage){
+					
+					}
+					if(data.invalidRecaptcha){
+					
+					}
+					// UNKNOWN STATUS RETURNED
+					if((!data.missingEmail)&&(!data.missingMessage)&&(!data.invalidRecaptcha)){
+						$("#contact-form-waiting").hide();
+						$("#contact-form-unknown-status-msg-identifier").text(postdata.guid);
+						$("#contact-form-unknown-status").show();
 					}
 				}
+			}).fail(function(){
+				// TECHNICAL ERROR WHEN READING RESULT
+				$("#contact-form-waiting").hide();
+				$("#contact-form-technical-error-msg-identifier").text(postdata.guid);
+				$("#contact-form-technical-error").show();
 			});
-
-
-			// ..
 		}).fail(function() {
+			// TECHNICAL ERROR WHEN SENDING
 			$("#contact-form-face").hide();
 			$("#contact-form-could_not_send").show();
 		});
