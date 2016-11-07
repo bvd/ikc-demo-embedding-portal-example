@@ -99,7 +99,7 @@ jQuery(document).ready(function() {
 			
 			// show the user that the form validation is running on the server
 			$("#contact-form-face").hide();
-			$("#contact-form-waiting-msg-identifier").text(postdata.guid);
+			$(".contact-form-msg-identifier").text(postdata.guid);
 			$("#contact-form-waiting").show();
 			
 			var retryCodes = [
@@ -111,38 +111,38 @@ jQuery(document).ready(function() {
 				url : "https://ikcomponeer-demo-contactform-status.azurewebsites.net/api/GetStatus?code=aojit9klufl0k1idjpk9d494qq0ty6yi4w&guid=" + postdata.guid,
 				type : 'GET'
 			}).retry({times:3, timeout:3000, statusCodes: retryCodes}).then(function(data){
+				
+				$("#contact-form-waiting").hide();
+				
 				if(data.messageForwarded){
-					// FUNCTIONAL SUCCESS
+					$("#contact-form-message-forwarded").show();
 				}
 				else
 				{
 					// FUNCTIONAL ERROR STATUSES
 					if(data.missingEmail){
-				
+						$("#contact-form-missing-email").show();
 					}
 					if(data.missingMessage){
-					
+						$("#contact-form-missing-message").show();
 					}
 					if(data.invalidRecaptcha){
-					
+						$("#contact-form-invalid-recaptcha").show();
 					}
 					// UNKNOWN STATUS RETURNED
 					if((!data.missingEmail)&&(!data.missingMessage)&&(!data.invalidRecaptcha)){
-						$("#contact-form-waiting").hide();
-						$("#contact-form-unknown-status-msg-identifier").text(postdata.guid);
 						$("#contact-form-unknown-status").show();
 					}
 				}
 			}).fail(function(){
 				// TECHNICAL ERROR WHEN READING RESULT
 				$("#contact-form-waiting").hide();
-				$("#contact-form-technical-error-msg-identifier").text(postdata.guid);
 				$("#contact-form-technical-error").show();
 			});
 		}).fail(function() {
 			// TECHNICAL ERROR WHEN SENDING
 			$("#contact-form-face").hide();
-			$("#contact-form-could_not_send").show();
+			$("#contact-form-could-not-send").show();
 		});
 	});
 	
