@@ -789,25 +789,15 @@
 								<p>Your message could not be sent due to a technical error. Please make sure your internet is working, refresh the page and try again."
 							</div>
 							
+							<div id="contact-form-thankyou" style="display:none;">
+								<p>Your message with id <span class="contact-form-msg-identifier"></span> was sent and validated successfully. We will react as soon as we have the time.</p>
+							</div>
+							
 							<div id="contact-form-waiting" style="display:none;">
 								<p>Processing message under id <span class="contact-form-msg-identifier"></span>, please wait for result status message ...</p>
 							</div>
-							<div id="contact-form-message-forwarded" style="display:none">
-								<p>Your message under id <span class="contact-form-msg-identifier"></span>, was sent to the server and processed. You will receive an answer as soon as we taken a look at it."
-							</div>
-							<div id="contact-form-missing-email" style="display:none">
-								<p>Your message under id <span class="contact-form-msg-identifier"></span>, was sent to the server but it could not be processed because there is no valid email address."
-							</div>
-							<div id="contact-form-missing-message" style="display:none">
-								<p>Your message under id <span class="contact-form-msg-identifier"></span>, was sent to the server but it was not processed as there is no text for the message ."
-							</div>
-							<div id="contact-form-invalid-recaptcha" style="display:none">
-								<p>Your message under id <span class="contact-form-msg-identifier"></span>, was sent to the server but it was not processed as the anti robot verification failed."
-							</div>
-							<div id="contact-form-unknown-status" style="display:none">
-								<p>Your message under id <span class="contact-form-msg-identifier"></span>, was sent to the server but it could not be processed."
-							</div>
-							<div id="contact-form-technical-error" style="display:none;">
+							
+							<div id="contact-form-could-not-retrieve-status" style="display:none;">
 								<p>Technical error when polling the result status message for your message under id <span class="contact-form-msg-identifier"></span>, make sure you have working internet, refresh the page and try again.</p>
 							</div>
 						</div>

@@ -102,43 +102,67 @@ jQuery(document).ready(function() {
 			$(".contact-form-msg-identifier").text(postdata.guid);
 			$("#contact-form-waiting").show();
 			
+			//
+			// follow the process by polling it here ...
+			//
 			var retryCodes = [
 				404, // not found (i.e. not created yet)
-				403  // the resource is locked
+				403  // the resource is locked because it is still being validated
 			];
 			
 			$.ajax({
 				url : "https://ikcomponeer-demo-contactform-status.azurewebsites.net/api/GetStatus?code=aojit9klufl0k1idjpk9d494qq0ty6yi4w&guid=" + postdata.guid,
 				type : 'GET'
-			}).retry({times:3, timeout:3000, statusCodes: retryCodes}).then(function(data){
+			}).retry({
+				times:3, 
+				timeout:3000, 
+				statusCodes: retryCodes
+			}).then(function(data){
+				//
+				// the form was processed and now we present the outcome to the user
+				//
 				
 				$("#contact-form-waiting").hide();
+				
+				// show the form as it was submitted but with disabled submit button
+				$(".contact_btn").first().disabled = true;
+				
+				var aha = false;
+				
+				$("#contact-form-face input.email").css({"border-color": "white"});
+				$("#contact-form-face textarea").css({"border-color": "white"});
 				
 				if(data.messageForwarded){
-					$("#contact-form-message-forwarded").show();
+					aha = true;
+					$("#contact-form-thankyou").show();
 				}
-				else
-				{
-					// FUNCTIONAL ERROR STATUSES
-					if(data.missingEmail){
-						$("#contact-form-missing-email").show();
-					}
-					if(data.missingMessage){
-						$("#contact-form-missing-message").show();
-					}
-					if(data.invalidRecaptcha){
-						$("#contact-form-invalid-recaptcha").show();
-					}
-					// UNKNOWN STATUS RETURNED
-					if((!data.missingEmail)&&(!data.missingMessage)&&(!data.invalidRecaptcha)){
-						$("#contact-form-unknown-status").show();
-					}
+				if(data.missingEmail){
+					aha = true;
+					$("#contact-form-face").show();
+					$("#contact-form-face input.email").css({"border-color": "red"});
 				}
+				if(data.missingMessage){
+					aha = true;
+					$("#contact-form-face").show();
+					$("#contact-form-face textarea").css({"border-color": "red"});
+				}
+				if(data.invalidRecaptcha){
+					aha = true;
+					$("#contact-form-face").show();
+					grecaptcha.reset();
+				}
+				if(!aha){
+					$("#contact-form-could-not-retrieve-status").show();
+				}
+				
 			}).fail(function(){
-				// TECHNICAL ERROR WHEN READING RESULT
+				//
+				// retrieval of result failed or the retry count exceeded
+				//
 				$("#contact-form-waiting").hide();
-				$("#contact-form-technical-error").show();
+				$("#contact-form-could-not-retrieve-status").show();
 			});
+			
 		}).fail(function() {
 			// TECHNICAL ERROR WHEN SENDING
 			$("#contact-form-face").hide();
