@@ -163,7 +163,7 @@ jQuery(document).ready(function() {
 				$("#contact-form-could-not-retrieve-status").show();
 			});
 			
-		}).fail(function() {
+		}).fail(function($xhr) {
 			// TECHNICAL ERROR WHEN SENDING
 			$("#contact-form-face").hide();
 			$("#contact-form-could-not-send").show();
