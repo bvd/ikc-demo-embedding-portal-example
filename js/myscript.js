@@ -91,7 +91,7 @@ jQuery(document).ready(function() {
 		postdata.message = $("#contact-form-face textarea").first().val();
 		postdata.email = $("#contact-form-face input.email").first().val();
 		postdata.recaptcha = grecaptcha.getResponse();
-		var apiurl = "https://ikcomponeer-demo-contactform-intake.azurewebsites.net/api/PostMessage?code=ps0y003ry5kmgmzc5ttg2h9sv8erntcec";
+		var apiurl = "https://ikc-embeddemo-contactform-web-dev.azurewebsites.net/api/CreateContactRequest";
 		
 		// the first request (store the form to be processed on the server) 
 		// it should next to always succeed as it has no dependencies
