@@ -155,7 +155,7 @@ jQuery(document).ready(function() {
 					$("#contact-form-could-not-retrieve-status").show();
 				}
 				
-			}).fail(function(){
+			}).fail(function($xhr){
 				//
 				// retrieval of result failed or the retry count exceeded
 				//
