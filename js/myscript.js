@@ -93,9 +93,18 @@ jQuery(document).ready(function() {
 		postdata.recaptcha = grecaptcha.getResponse();
 		var apiurl = "https://ikc-embeddemo-contactform-web-dev.azurewebsites.net/api/CreateContactRequest";
 		
-		// the first request (store the form to be processed on the server) 
-		// it should next to always succeed as it has no dependencies
-		$.post( apiurl, postdata).done(function( data ) {
+		
+		$.ajax({
+          type: "POST",
+          contentType: "application/json",
+          url: apiurl,
+          data: postdata,
+          dataType: "json"
+		})
+		
+		//$.post(apiurl , postdata)
+		
+		.done(function( data ) {
 			
 			// show the user that the form validation is running on the server
 			$("#contact-form-face").hide();
