@@ -120,13 +120,21 @@ jQuery(document).ready(function() {
 			];
 			
 			$.ajax({
-				url : "https://ikcomponeer-demo-contactform-status.azurewebsites.net/api/GetStatus?code=aojit9klufl0k1idjpk9d494qq0ty6yi4w&guid=" + postdata.guid,
+				url : "https://ikc-embeddemo-contactform-web-dev.azurewebsites.net/api/ReadContactRequest?guid=" + postdata.guid,
 				type : 'GET'
 			}).retry({
 				times:3, 
 				timeout:3000, 
 				statusCodes: retryCodes
-			}).then(function(data){
+			})
+			.fail(function($xhr){
+				//
+				// retrieval of result failed or the retry count exceeded
+				//
+				$("#contact-form-waiting").hide();
+				$("#contact-form-could-not-retrieve-status").show();
+			})
+			.then(function(data){
 				//
 				// the form was processed and now we present the outcome to the user
 				//
@@ -163,13 +171,6 @@ jQuery(document).ready(function() {
 				if(!aha){
 					$("#contact-form-could-not-retrieve-status").show();
 				}
-				
-			}).fail(function($xhr){
-				//
-				// retrieval of result failed or the retry count exceeded
-				//
-				$("#contact-form-waiting").hide();
-				$("#contact-form-could-not-retrieve-status").show();
 			});
 			
 		}).fail(function($xhr) {
